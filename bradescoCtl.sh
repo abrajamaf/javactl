@@ -34,26 +34,23 @@ function menu() {
 function prod() {
   read -p "elija un a oción " OPTION
   grep -v '^ *#' <nodos-prod.txt | while IFS= read -r line; do
-  echo $HOST
-  ssh "$line" 'bash -s' <servicios.sh $OPTION
+  ssh "$line" 'bash -s' <prodServices.sh $OPTION
   done
 }
 function cert() {
   read -p "elija un a oción" OPTION
   grep -v '^ *#' <nodos-cert.txt | while IFS= read -r line; do
-    ssh -t "$line" 'bash -s' <servicios.sh  "$OPTION"
+    ssh -t "$line" 'bash -s' <certServices.sh  "$OPTION"
   done
 }
 
 function enviroment() {
   if [[ $OPT == "prod" ]]; then
-    export HOST='172.20.130.110'
-    echo "$HOST"
+    HOST='172.20.130.110'
     prod
 
   elif [[ $OPT == "cert" ]]; then
-    export HOST='172.20.138.10'
-    echo "$HOST"
+    HOST='172.20.138.10'
     cert
   else
     echo "El server no existe"
