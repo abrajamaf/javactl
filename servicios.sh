@@ -14,6 +14,7 @@ function test() {
   ls -la
   for f in *.jar; do
     # [[ -e "$f" ]] || break
+    pwd
     echo -e "scp -P 2290 -p root@"$HOST":/BID/bdco-servicios/jar/"$f" ."
     ls -la /BID/bdco-servicios/jar/"$f"
   done
