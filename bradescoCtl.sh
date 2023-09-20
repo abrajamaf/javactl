@@ -46,12 +46,12 @@ function cert() {
 
 function enviroment() {
   if [[ $OPT == "prod" ]]; then
-    HOST='172.20.130.110'
+    export HOST='172.20.130.110'
     echo "$HOST"
     prod
 
   elif [[ $OPT == "cert" ]]; then
-    HOST='172.20.138.10'
+    export HOST='172.20.138.10'
     echo "$HOST"
     cert
   else
