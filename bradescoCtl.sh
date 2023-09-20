@@ -34,6 +34,7 @@ function menu() {
 function prod() {
   read -p "elija un a oción " OPTION
   grep -v '^ *#' <nodos-prod.txt | while IFS= read -r line; do
+  echo $HOST
   ssh "$line" 'bash -s' <servicios.sh $OPTION
   done
 }
