@@ -1,5 +1,5 @@
-#!/bin/bash
 #!/usr/bin/env bash
+set -eox pipefail
 # Colores
 # RJO='\e[1;31m'
 VDE='\e[1;32m'
@@ -32,55 +32,65 @@ function menu() {
 }
 
 function prod() {
-  read -r OPTION
+  read -p "elija un a oción " OPTION
   grep -v '^ *#' <nodos-prod.txt | while IFS= read -r line; do
-    ssh -t  "$line" 'bash -s' <servicios.sh "$OPTION"
+  ssh -t "$line" 'bash -s' < servicios.sh "$OPTION"
   done
 }
 function cert() {
-  read -r OPTION
+  read -p "elija un a oción" OPTION
   grep -v '^ *#' <nodos-cert.txt | while IFS= read -r line; do
-    ssh -n "$line" 'bash -s' <servicios.sh "$OPTION"
+    ssh -t "$line" 'bash -s' <servicios.sh  "$OPTION"
   done
 }
 
 function enviroment() {
-  if [[ $OPC == "prod" ]]; then
+  if [[ $OPT == "prod" ]]; then
     HOST='172.20.130.110'
-    echo -e "$HOST"
+    echo "$HOST"
     prod
 
-  elif [[ $OPC == "cert" ]]; then
+  elif [[ $OPT == "cert" ]]; then
     HOST='172.20.138.10'
-    echo -e "$HOST"
+    echo "$HOST"
     cert
   else
-    echo "This never happens"
+    echo "El server no existe"
   fi
 }
 
-if [ "$1" = "--help" ]; then
-  $0 any
-  exit 0
-fi
-
-read -r OPC
-case "$OPT" in
-prod)
-  enviroment
-  ;;
-cert)
-  enviroment
-  ;;
-*)
-  echo "Usar: $0 {1|2|3|4|5|6}"
-  echo -eE "1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal\""
-  echo -eE "2 =$VDE Sincroniza$NTRO los archivos$AMA Jar$NTRO al servidor correspondiente"
-  echo -eE "3 =$VDE Detiene$NTRO todos loa servicios Java desplegados en el servidor"
-  echo -eE "4 =$VDE Inicoa$NTRO todos loa servicios Java desplegados en el servidor"
-  echo -eE "5 =$VDE Reinicia$NTRO todos loa servicios Java desplegados en el servidor"
-  echo -eE "6 =$VDE Muestra el estado de los servicios Java desplegados en el servidor"
-  echo -eE "6 =$VDE Muestra el estado de los servicios Java desplegados en el servidor"
-  exit 1
-  ;;
-esac
+# if [ "$1" = "--help" ]; then
+#   $0 any
+#   exit 0
+# fi
+while [[ $OPT != q ]]; do
+  echo Hola
+  read -r OPT
+  case "$OPT" in
+  prod)
+    enviroment
+    echo -e " ----------------------------------------------------------------------------- "
+    read -p "Pulse cualquier tecla para continuar ..." any
+    ;;
+  cert)
+    enviroment
+    echo -e " ----------------------------------------------------------------------------- "
+    read -p "Pulse cualquier tecla para continuar ..." any
+    ;;
+  q)
+    echo "Gracias por usar mi Script..." && sleep 2
+    clear && exit 0
+    ;;
+  *)
+    echo "Usar: $0 {1|2|3|4|5|6}"
+    echo -e "1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal\""
+    echo -e "2 =$VDE Sincroniza$NTRO los archivos$AMA Jar$NTRO al servidor correspondiente"
+    echo -e "3 =$VDE Detiene$NTRO todos loa servicios Java desplegados en el servidor"
+    echo -e "4 =$VDE Inicoa$NTRO todos loa servicios Java desplegados en el servidor"
+    echo -e "5 =$VDE Reinicia$NTRO todos loa servicios Java desplegados en el servidor"
+    echo -e "6 =$VDE Muestra el estado de los servicios Java desplegados en el servidor"
+    echo -e "6 =$VDE Muestra el estado de los servicios Java desplegados en el servidor"
+    exit 1
+    ;;
+  esac
+done
