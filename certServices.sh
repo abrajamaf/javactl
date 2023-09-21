@@ -98,7 +98,7 @@ function menu() {
 }
 
 while [[ $1 != q ]]; do
-  menu
+  # menu
   # read -r ACTION
   case "${1}" in
   1)
