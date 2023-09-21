@@ -32,15 +32,14 @@ function menu() {
 }
 
 function prod() {
-  read -p "elija un a oción " OPTION
+
   grep -v '^ *#' <nodos-prod.txt | while IFS= read -r line; do
-  ssh "$line" 'bash -s' <prodServices.sh $OPTION
+    ssh "$line" 'bash -s' <prodServices.sh $OPTION
   done
 }
 function cert() {
-  read -p "elija un a oción" OPTION
   grep -v '^ *#' <nodos-cert.txt | while IFS= read -r line; do
-    ssh -t "$line" 'bash -s' <certServices.sh  "$OPTION"
+    ssh -t "$line" 'bash -s' <certServices.sh
   done
 }
 
@@ -76,7 +75,7 @@ while [[ $OPT != q ]]; do
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   q)
-    echo "Gracias por usar mi Script..." && sleep 2
+    echo "Gracias por usar mi Script..."
     clear && exit 0
     ;;
   *)
