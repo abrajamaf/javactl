@@ -9,37 +9,27 @@ NTRO='\e[0m'
 # BLNK='\e[5m'
 
 function menu() {
-  echo -e " ---------------------------------------------------------------------------- "
-  echo -e "| Este Script ayuda al$AMA DESPLIEGUE, INICIO y PARADA$NTRO de los servicios$VDD Java$NTRO    |"
-  echo -e "| cluster de$AZL BRADESCO$NTRO                   |"
-  echo -e "> ----------------------------------------------------------------------------<"
-  echo -e "| Por favor elige la opción que deseas realizar                               |"
-  echo -e "> --------------------------------------------------------------------------- <"
-  echo -e "| Según sea la elección, necesitará conocer:                                  |"
-  echo -e "|$VDE proxy:$NTRO - Un nombre corto del servicio. ej.:$AMA backend1$NTRO                        |"
-  echo -e "|        - Puerto local donde se expone el servicio. ej.:$AMA 19418$NTRO               |"
-  echo -e "|        - Prefix donde se publicara el servicio. ej.:$AMA /bid2/vi/backend1/rest$NTRO |"
-  echo -e "|$VDE html:$NTRO - Un nombre corto del servicio. ej.:$AMA frontend1$NTRO                        |"
-  echo -e "|       - PATH absoluto donde se encuentra la página: ej.:$AMA /var/www/frontend1$NTRO |"
-  echo -e "|       - Prefix donde se publicara el servicio. ej:$AMA /portal1$NTRO                 |"
-  echo -e "> --------------------------------------------------------------------------- <"
-  echo -e "| $AMA 1:$VDE proxy $NTRO                                                                  |"
-  echo -e "| $AMA 2:$VDE html  $NTRO                                                                  |"
-  echo -e "| $AMA 3:$VDE Ver los servicios configurados.  $NTRO                                       |"
-  echo -e "| $AMA 4:$VDE Borrar un prefix.  $NTRO                                                     |"
-  echo -e "| $AMA q:$VDE Salir. $NTRO                                                                 |"
-  echo -e " ----------------------------------------------------------------------------- "
+  echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal\""
+  echo -e " 2 =$VDE Sincroniza$NTRO los archivos$AMA Jar$NTRO al servidor correspondiente"
+  echo -e " 3 =$VDE Detiene$NTRO todos loa servicios Java desplegados en el Cluster"
+  echo -e " 4 =$VDE Inicoa$NTRO todos loa servicios Java desplegados en el CLuster"
+  echo -e " 5 =$VDE Reinicia$NTRO todos loa servicios Java desplegados en el CLuster"
+  echo -e " 6 =$VDE Muestra el estado$NTRO de los servicios Java desplegados en el servidor"
+  echo -e " 7 =$VDE Es una prueba.$NTRO"
 }
 
 function prod() {
-
+menu
+read -p " Elija una opción: " OPTION
   grep -v '^ *#' <nodos-prod.txt | while IFS= read -r line; do
     ssh "$line" 'bash -s' <prodServices.sh $OPTION
   done
 }
 function cert() {
+  menu
+  read -p " Elija una opción: " OPTION
   grep -v '^ *#' <nodos-cert.txt | while IFS= read -r line; do
-    ssh -t "$line" 'bash -s' <certServices.sh
+    ssh -t "$line" 'bash -s' <certServices.sh $OPTION
   done
 }
 
