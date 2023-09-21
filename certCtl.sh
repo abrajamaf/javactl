@@ -26,7 +26,7 @@ function deployment() {
     echo " Escriba el nombre del archivo: "
     read -r jarFile
     # ssh -t $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/oneNode.sh'  ## Cambia Cluster a un nodo
-    scp -p -P 2290 "$HOME"/"$jarFile" "$HOST":/BID/bdco-servicios/deployment/deppot/
+    scp -p -P 2290 $jarFile" "$HOST":/BID/bdco-servicios/deployment/deppot/
     ssh -t "$HOST" sudo /BID/bdco-servicios/tools/deployment.sh
     exit 0
   fi
