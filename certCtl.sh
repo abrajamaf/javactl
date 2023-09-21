@@ -35,6 +35,7 @@ function deployment() {
 }
 
 function cert() {
+  echo -e "\n"
   echo -e " 2 =$VDE Sincroniza$NTRO los archivos$AMA Jar$NTRO al servidor correspondiente"
   echo -e " 3 =$VDE Detiene$NTRO todos loa servicios Java desplegados en el Cluster"
   echo -e " 4 =$VDE Inicoa$NTRO todos loa servicios Java desplegados en el CLuster"
