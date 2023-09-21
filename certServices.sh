@@ -31,7 +31,7 @@ function deployment() {
   echo -e " Si esta seguro digite$AMA s$NTRO :"
   read -r ABC
   if [[ "${ABC}" == "s" ]]; then
-    ls -1 *jar
+    # ls -1 *jar
     read -p "Escriba el nombre del archivo: " jarFile
     ssh -t $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/oneNode.sh'
     scp -p -P 2290 "$jarFile" "$HOST":/BID/bdco-servicios/deployment/deppot/
