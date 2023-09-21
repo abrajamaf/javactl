@@ -48,10 +48,6 @@ function cert() {
   done
 }
 
-# if [ "$1" = "--help" ]; then
-#   $0 any
-#   exit 0
-# fi
 while [[ $OPT != q ]]; do
   menu
   read -r OPT

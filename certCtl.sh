@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eox pipefail
+# set -eox pipefail  ## Vebose del scritp
 # Colores
 # RJO='\e[1;31m'
 VDE='\e[1;32m'
@@ -7,6 +7,7 @@ AMA='\e[1;33m'
 # AZL='\e[1;34m'
 NTRO='\e[0m'
 # BLNK='\e[5m'
+# NGINX='172.20.138.7'
 HOST='172.20.138.10'
 function menu() {
   echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal.\""
@@ -48,10 +49,6 @@ function cert() {
   done
 }
 
-# if [ "$1" = "--help" ]; then
-#   $0 any
-#   exit 0
-# fi
 while [[ $OPT != q ]]; do
   menu
   read -r OPT
