@@ -97,10 +97,10 @@ function menu() {
   echo -e " 7 =$VDE Es una prueba.$NTRO"
 }
 
-while [[ $ACTION != q ]]; do
+while [[ $1 != q ]]; do
   menu
-  read -r ACTION
-  case "${ACTION}" in
+  # read -r ACTION
+  case "${1}" in
   1)
     deployment
     ;;
