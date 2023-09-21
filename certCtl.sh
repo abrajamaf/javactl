@@ -24,7 +24,7 @@ function menu() {
   echo -e "\n"
   echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal.\""
   echo -e " 2 =$VDE Opciones $NTRO de controles sobre los servicios$AMA Jar$NTRO."
-  echo -e " 3 =$AMA Cambia el modo del cluster$NTRO $BLNK Solo Infraesttuctura."
+  echo -e " 3 =$AMA Cambia el modo del cluster$NTRO $BLNK Solo Infraesttuctura$NTRO."
   echo -e " q =$VDE Salir $NTRO."
   echo -e "\n"
 }
