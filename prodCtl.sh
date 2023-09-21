@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #=================================================================================
-# Título      : certCtl.sh
+# Título      : prodCtl.sh
 # Descripción : permite acciones de control a los servicios Java de bradesco CERT
 # Autor       : Abraham Alvarado Fuentes
 # Versión     : 1.0.0
 # Fecha       : 2023-09-21
 # Notas       : Utiliza el archivo 
-# Uso         : ./certCtl.sh
+# Uso         : ./prodCtl.sh
 #=================================================================================
 
 # set -eox pipefail  ## Vebose del scritp
@@ -17,8 +17,8 @@ AMA='\e[1;33m'
 AZL='\e[1;34m'
 NTRO='\e[0m'
 BLNK='\e[5m'
-NGINX='172.20.138.7'
-HOST='172.20.138.10'
+NGINX='172.20.130.100'
+HOST='172.20.130.110'
 
 function menu() {
   echo -e "\n"
