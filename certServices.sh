@@ -8,8 +8,8 @@ AMA='\e[1;33m'
 # AZL='\e[1;34m'
 NTRO='\e[0m'
 # BLNK='\e[5m'
-HOST='172.20.130.110'
-NGINX='172.20.130.100'
+HOST='172.20.138.10'
+NGINX='172.20.138.7'
 function test() {
   echo -e "$AMA${HOSTNAME^^}$NTRO  $(hostname -I)"
   sudo su
