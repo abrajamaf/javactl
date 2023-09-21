@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eox pipefail
+# set -eox pipefail ## Verbose de Script
 
 # Colores
 # RJO='\e[1;31m'
