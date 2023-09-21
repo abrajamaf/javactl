@@ -2,7 +2,7 @@
 set -eox pipefail
 
 # Colores
-# RJO='\e[1;31m'
+RJO='\e[1;31m'
 VDE='\e[1;32m'
 AMA='\e[1;33m'
 # AZL='\e[1;34m'
@@ -16,7 +16,7 @@ function test() {
   cd /BID/bdco-servicios/jar || exit
   ls -la
   for f in *.jar; do
-    # [[ -e "$f" ]] || break
+    [[ -e "$f" ]] || break
     pwd
     echo -e "scp -P 2290 -p root@"$HOST":/BID/bdco-servicios/jar/"$f" ."
     ls -la /BID/bdco-servicios/jar/"$f"
@@ -31,10 +31,10 @@ function deployment() {
   echo -e " Si esta seguro digite$AMA s$NTRO :"
   read -r ABC
   if [[ "${ABC}" == "s" ]]; then
-    # ls -1 *jar
+    find "$HOME" -name "*.jar"
     read -p "Escriba el nombre del archivo: " jarFile
     ssh -t $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/oneNode.sh'
-    scp -p -P 2290 "$jarFile" "$HOST":/BID/bdco-servicios/deployment/deppot/
+    scp -p -P 2290 "$HOME/$jarFile" "$HOST":/BID/bdco-servicios/deployment/deppot/
     ssh -t "$HOST" sudo /BID/bdco-servicios/tools/deployment.sh
   fi
   exit
@@ -89,6 +89,7 @@ function status() {
 }
 
 function menu() {
+  echo -e " Script de control del ambiente$RJO Bradesco CERT$NTRO"
   echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal\""
   echo -e " 2 =$VDE Sincroniza$NTRO los archivos$AMA Jar$NTRO al servidor correspondiente"
   echo -e " 3 =$VDE Detiene$NTRO todos loa servicios Java desplegados en el Cluster"
@@ -98,7 +99,7 @@ function menu() {
   echo -e " 7 =$VDE Es una prueba.$NTRO"
 }
 
-while [[ $1 != q ]]; do
+# while [[ $1 != q ]]; do
   # menu
   # read -r ACTION
   case "${1}" in
@@ -135,4 +136,4 @@ while [[ $1 != q ]]; do
     exit 1
     ;;
   esac
-done
+# done
