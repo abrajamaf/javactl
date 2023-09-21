@@ -28,7 +28,8 @@ function deployment() {
   # copia y despliega el archivo jar en el servidor "principal"
   echo -e " Ésta opción redirige el tráfico a un$AMA solo Servidor$NTRO "
   echo -e " ¿Está seguro de aplicar el despliegue?"
-  read -p " Si esta seguro digite$AMA s$NTRO :" ABC
+  echo -e " Si esta seguro digite$AMA s$NTRO :"
+  read -r ABC
   if [[ "${ABC}" == "s" ]]; then
     ls -1 *jar
     read -p "Escriba el nombre del archivo: " jarFile
