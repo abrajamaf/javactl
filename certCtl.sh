@@ -7,7 +7,7 @@ AMA='\e[1;33m'
 # AZL='\e[1;34m'
 NTRO='\e[0m'
 # BLNK='\e[5m'
-
+HOST='172.20.138.10'
 function menu() {
   echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal.\""
   echo -e " 2 =$VDE Opciones $NTRO de controles sobre los servicios$AMA Jar$NTRO."
