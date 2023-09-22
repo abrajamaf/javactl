@@ -52,7 +52,7 @@ function cert() {
   echo -e " Elija una opción: "
   echo -e "\n"
   read -r OPTION
-  grep -v '^ *#' <nodos-cert.txt | while IFS= read -r line; do
+  grep -v '^ *#' <nodos-prod.txt | while IFS= read -r line; do
     ssh -t "$line" 'bash -s' <certServices.sh "$OPTION"
   done
 }
@@ -62,7 +62,7 @@ function cluster() {
   echo -e " Ésta opción redirige el tráfico a un$AMA solo Servidor$NTRO,"
   echo -e " o bien, hacia los diversos servidores del cluster"
   echo -e " Solo está permitido para$AZL Infraestructura.$NTRO"
-  echo -e " Si esta seguro digite$AMA s$NTRO :"
+  echo -e " Si esta seguro digite: $AMA s$NTRO"
   read -r ABC
   if [[ "${ABC}" == "s" ]]; then
     echo -e " 1 = Dirige el tráfico a un solo servidor"
@@ -86,21 +86,21 @@ while [[ $OPT != q ]]; do
   case "$OPT" in
   1)
     deployment
-    echo " ----------------------------------------------------------------------------- \n "
+    echo -e " ----------------------------------------------------------------------------- \n "
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   2)
     cert
-    echo " ----------------------------------------------------------------------------- \n "
+    echo -e " ----------------------------------------------------------------------------- \n "
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   3)
     cluster
-    echo " ----------------------------------------------------------------------------- \n "
+    echo -e " ----------------------------------------------------------------------------- \n "
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   q)
-    echo "\n Gracias por usar mi Script..."
+    echo -e "\n Gracias por usar mi Script..."
     exit 0
     ;;
   *)
