@@ -72,16 +72,12 @@ function cluster() {
     read -r CLUSTER
     if [ "${CLUSTER}" == "1" ]; then
       ssh  $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/oneNode.sh' ## Cambia Cluster a un nodo
-      exit 0
     elif [ "${CLUSTER}" == "2" ]; then
       ssh  $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/clusterNodes.sh' ## Cambia a multinodo
-      exit 0
     else
       # Elcción erronea
-      exit 1
     fi
   fi
-  exit 1
 }
 
 while [[ $OPT != q ]]; do
