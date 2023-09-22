@@ -76,7 +76,9 @@ function cluster() {
       ssh  $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/clusterNodes.sh' ## Cambia a multinodo
     else
       # Elcción erronea
+      exit 1
     fi
+    exit 1
   fi
 }
 
