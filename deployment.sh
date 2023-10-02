@@ -32,28 +32,22 @@ users_v2=('users-v2' '172.20.130.113' 'digital-enrollment-service-users-v2-0.0.1
 opt=('opt' '172.20.130.113' 'opt-0.0.1-SNAPSHOT.jar')
 all_services=('db_router' 'alfresco' 'biometric_facial_v2' 'bradesco_crons' 'bradesco_v2' 'configuration_v2' 'contracts_v2' 'cryptography_v2' 'documents_v2' 'external_v2' 'ine_v2' 'login_v2' 'notification_v2' 'ocr_v2' 'operations_v2' 'person_v2' 'scoring_v2' 'tkn_v2' 'users_v2' 'opt')
 
-# function deployment() {
-#   # copia y despliega el archivo jar en el servidor "principal"
-#   echo -e "\n"
-#   find "$HOME" -name "*.jar"
-#   echo -e "\n"
-#   echo " Escriba el nombre del archivo: "
-#   read -r jarFile
-#   scp -p -P 2290 "$jarFile" "$HOST":/BID/bdco-servicios/deployment/deppot/
-#   ssh -t "$HOST" sudo /BID/bdco-servicios/tools/deployment.sh
-#   exit 0
-# }
+function deployment() {
+  # copia y despliega el archivo jar en el servidor "principal"
+  echo -e "\n"
+  find "$HOME/" -maxdepth 1 -type f -name "*.jar"|awk -F/ '{print $NF}'
+  echo -e "\n"
+  echo " Escriba el nombre del archivo: "
+  read -r jarFile
+  SERV=( $(grep "$jarFile" prodServ.txt) )
 
-function servicios(){
-
-for f in "${all_services[@]}"; do
-  x="$f"
-#    echo -e ${f[2]}
-  echo -n ${x[@]}
-#   echo ""
-done
+  echo -e "scp -p -P 2290 "$jarFile" "${SERV[1]}":/BID/bdco-servicios/deployment/deppot/"
+  echo -e "ssh -t "${servi[1]}" sudo /BID/bdco-servicios/tools/deployment.sh"
+  exit 0
 }
+
+
 # echo "${alfresco[2]}"
-servicios
+deployment
 
 # echo "${all_services[@]}"
