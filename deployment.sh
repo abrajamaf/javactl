@@ -13,10 +13,9 @@ function deployment() {
   scp -p -P 2290 "$HOME/$jarFile" "${SERV[1]}":/BID/bdco-servicios/deployment/deppot/
   ssh -t "${SERV[1]}" sudo /BID/bdco-servicios/tools/deployment.sh
   sudo rm -f "$HOME/$jarFile"
-  exit 0
 }
 function syncronize() {
-  ssh -t "${SERV[1]}" 'bash -s' <synProd.sh
+  ssh -t "${SERV[2]}" <syncProd.sh
 }
 function menu() {
   echo -e "\n"
