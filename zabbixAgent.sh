@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
-yum install -y zabbix-agent
 mv /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.example
+mv /etc/zabbix_agentd.conf /etc/zabbix_agentd.example
+mkdir -p /etc/zabbix/zabbix_agentd.d/
+chown zabbix. /etc/zabbix/zabbix_agentd.d
+chown zabbix. /etc/zabbix_agentd.conf
 
-cat <<- EOF >/etc/zabbix/zabbix_agentd.conf
-PidFile=/var/run/zabbix/zabbix_agentd.pid
+cat <<- EOF >/etc/zabbix_agentd.conf
+PidFile=/run/zabbix/zabbix_agentd.pid
 LogFile=/var/log/zabbix/zabbix_agentd.log
 LogFileSize=0
 AllowKey=system.run[*]
