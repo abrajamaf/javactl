@@ -18,6 +18,14 @@ function deployment() {
 function syncronize() {
   ssh -t $HOST 'bash -s' <synProd.sh
 }
+function menu() {
+  echo -e "\n"
+  echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal.\""
+  echo -e " 2 =$VDE Sincroniza $NTRO los servicios en los nodos correspondientes del cluster."
+  echo -e " q =$VDE Salir $NTRO."
+  echo -e "\n"
+}
+
 
 # echo "${alfresco[2]}"
 # deployment
