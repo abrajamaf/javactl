@@ -15,9 +15,9 @@ function enviroment() {
   echo -e "\n"
   read -r ENV
   if [ "$ENV" == "1" ]; then
-    export ENV_FILE=prodServ.txt
-  elif [ "$ENV" == "2" ]; then
     export ENV_FILE=certServ.txt
+  elif [ "$ENV" == "2" ]; then
+    export ENV_FILE=prodServ.txt
   else
     echo -e "$RJO Seleccción no disponible. $NTRO"
     exit 0
@@ -32,8 +32,8 @@ function deployment() {
   echo -e " en su$AMA HOME$NTRO = $VDE$HOME$NTRO "
   echo " Escriba el nombre del archivo: "c
   read -r jarFile
-  mapfile -d" " -t SERV < <(grep "$jarFile" $ENV_FILE)
-  # SERV=($(grep "$jarFile" $ENV_FILE))
+  # mapfile -d" " -t SERV < <(grep "$jarFile" $ENV_FILE)
+  SERV=($(grep "$jarFile" $ENV_FILE))
 
   scp -p -P 2290 "$HOME/$jarFile" "${SERV[1]}":/BID/bdco-servicios/deployment/deppot/
   ssh -t "${SERV[1]}" sudo /BID/bdco-servicios/tools/deployment.sh
@@ -54,7 +54,8 @@ function syncronize() {
 
 function status() {
   grep -v '^ *#' <$ENV_FILE | while IFS= read -r line; do
-    mapfile -d" " -t SERV < <(cat "$line" $ENV_FILE)
+    SERV=($(cat "$line"))
+    # mapfile -d" " -t SERV < <(cat "$line" $ENV_FILE)
     ssh -t ${SERV[2]} echo -e "$AMA${HOSTNAME^^}$NTRO  $(hostname -I)"
     ssh -t ${SERV[2]} "sudo /BID/bdco-servicios/tools/status-services.sh"
   done
