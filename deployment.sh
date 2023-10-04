@@ -1,52 +1,99 @@
 #!/usr/bin/env bash
-set -eox pipefail ## Vebose del scritp
-
+# set -eox pipefail ## Vebose del scritp
+# Colores
+RJO='\e[1;31m'
+VDE='\e[1;32m'
+AMA='\e[1;33m'
+AZL='\e[1;34m'
+NTRO='\e[0m'
+# BLNK='\e[5m'
+function enviroment() {
+  echo -e " Elija el ambiente que hará los cambios \n"
+  echo -e " 1 =$VDE CERTIFICACIÓN.$NTRO"
+  echo -e " 2 =$VDE PRODUCCIÓN.$NTRO"
+  echo -e " q =$VDE Salir.$NTRO \n"
+  echo -e "\n"
+  read -r ENV
+  if [ "$ENV" == "1" ]; then
+    export ENV_FILE=prodServ.txt
+  elif [ "$ENV" == "2" ]; then
+    export ENV_FILE=certServ.txt
+  else
+    echo -e "$RJO Seleccción no disponible. $NTRO"
+    exit 0
+  fi
+}
 function deployment() {
   # copia y despliega el archivo jar en el servidor "principal"
-  echo -e "\n"
+  echo -e "Archivos disponibles: \n"
   find "$HOME/" -maxdepth 1 -type f -name "*.jar" | awk -F/ '{print $NF}'
   echo -e "\n"
-  echo " Escriba el nombre del archivo: "
+  echo -e " El script tonará el archivo que se encuentre "
+  echo -e " en su$AMA HOME$NTRO = $VDE$HOME$NTRO "
+  echo " Escriba el nombre del archivo: "c
   read -r jarFile
-  SERV=($(grep "$jarFile" certServ.txt))
+  mapfile -d" " -t SERV < <(grep "$jarFile" $ENV_FILE)
+  # SERV=($(grep "$jarFile" $ENV_FILE))
 
   scp -p -P 2290 "$HOME/$jarFile" "${SERV[1]}":/BID/bdco-servicios/deployment/deppot/
   ssh -t "${SERV[1]}" sudo /BID/bdco-servicios/tools/deployment.sh
-  sudo rm -f "$HOME/$jarFile"
+  # sudo rm -f "$HOME/$jarFile"
 }
 function syncronize() {
-  ssh -t "${SERV[2]}" <syncProd.sh
+  cat $ENV_FILE | cut -d" " -f1
+  echo " Escriba el nombre del servicio que desea sincronizar: "
+  read -r jarServ
+  mapfile -d" " -t SERV < <(grep "$jarServ" $ENV_FILE)
+  echo -e "$AMA Copiando archivo $AZL${SERV[3]}$NTRO en ${SERV[2]}"
+  ssh -t ${SERV[2]} "sudo scp -p -P2290 root@${SERV[1]}:/BID/bdco-servicios/jar/${SERV[3]} /BID/bdco-servicios/jar/"
+  echo -e "$AMA Reiniciando servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
+  ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl restart {}"
+  echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
+  ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl ststus {}"
 }
+
+function status() {
+  grep -v '^ *#' <$ENV_FILE | while IFS= read -r line; do
+    mapfile -d" " -t SERV < <(cat "$line" $ENV_FILE)
+    ssh -t ${SERV[2]} echo -e "$AMA${HOSTNAME^^}$NTRO  $(hostname -I)"
+    ssh -t ${SERV[2]} "sudo /BID/bdco-servicios/tools/status-services.sh"
+  done
+}
+
 function menu() {
   echo -e "\n"
-  echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal.\""
-  echo -e " 2 =$VDE Sincroniza $NTRO los servicios en los nodos correspondientes del cluster."
-  echo -e " q =$VDE Salir $NTRO."
+  echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal\"."
+  echo -e " 2 =$VDE Sincroniza$NTRO los servicios en los nodos correspondientes del cluster."
+  echo -e " 3 =$VDE Status$NTRO de los servicios en los nodos correspondientes del cluster."
+  echo -e " q =$VDE Salir$NTRO."
   echo -e "\n"
 }
 
-
-# echo "${alfresco[2]}"
-# deployment
-
-# echo "${all_services[@]}"
 while [[ $OPT != q ]]; do
   menu
   read -r OPT
   case "$OPT" in
   1)
+    enviroment
     deployment
     echo " ----------------------------------------------------------------------------- "
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   2)
+    enviroment
     syncronize
+    echo " ----------------------------------------------------------------------------- "
+    read -p "Pulse cualquier tecla para continuar ..." any
+    ;;
+  3)
+    enviroment
+    status
     echo " ----------------------------------------------------------------------------- "
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   q)
     echo "Gracias por usar mi Script..."
-    clear && exit 0
+    exit 0
     ;;
   *)
     echo "Usar: $0 {1|2}"

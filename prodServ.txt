@@ -1,20 +1,20 @@
-db-router 172.20.130.112 digital-enrollment-db-router-0.0.1-SNAPSHOT.jar
-alfresco 172.20.130.114 digital-enrollment-service-alfresco-0.0.1-SNAPSHOT.jar
-biometric-facial-v2 172.20.130.113 digital-enrollment-service-biometric-facial-v2-0.0.1-SNAPSHOT.jar
-bradesco-crons 172.20.130.113 digital-enrollment-service-bradesco-crons-0.0.1-SNAPSHOT.jar
-bradesco-v2 172.20.130.115 digital-enrollment-service-bradesco-v2-0.0.1-SNAPSHOT.jar
-configuration-v2 172.20.130.114 digital-enrollment-service-configuration-v2-0.0.1-SNAPSHOT.jar
-contracts-v2 172.20.130.120 digital-enrollment-service-contracts-v2-0.0.1-SNAPSHOT.jar
-cryptography-v2 172.20.130.112 digital-enrollment-service-cryptography-v2-0.0.1-SNAPSHOT.jar
-documents-v2 172.20.130.117 digital-enrollment-service-documents-v2-0.0.1-SNAPSHOT.jar
-external-v2 172.20.130.112 digital-enrollment-service-external-v2-0.0.1-SNAPSHOT.jar
-ine-v2 172.20.130.115 digital-enrollment-service-ine-v2-0.0.1-SNAPSHOT.jar
-login-v2 172.20.130.113 digital-enrollment-service-login-v2-0.0.1-SNAPSHOT.jar
-notification-v2 172.20.130.119 digital-enrollment-service-notification-v2-0.0.1-SNAPSHOT.jar
-ocr-v2 172.20.130.116 digital-enrollment-service-ocr-v2-0.0.1-SNAPSHOT.jar
-operations-v2 172.20.130.115 digital-enrollment-service-operations-v2-0.0.1-SNAPSHOT.jar
-person-v2 172.20.130.114 digital-enrollment-service-person-v2-0.0.1-SNAPSHOT.jar
-scoring-v2 172.20.130.118 digital-enrollment-service-scoring-v2-0.0.1-SNAPSHOT.jar
-tkn-v2 172.20.130.112 digital-enrollment-service-tkn-v2-0.0.1-SNAPSHOT.jar
-users-v2 172.20.130.113 digital-enrollment-service-users-v2-0.0.1-SNAPSHOT.jar
-opt 172.20.130.113 opt-0.0.1-SNAPSHOT.jar
+db-router 172.20.130.110 172.20.130.112 digital-enrollment-db-router-0.0.1-SNAPSHOT.jar
+alfresco 172.20.130.110 172.20.130.114 digital-enrollment-service-alfresco-0.0.1-SNAPSHOT.jar
+biometric-facial-v2 172.20.130.110 172.20.130.113 digital-enrollment-service-biometric-facial-v2-0.0.1-SNAPSHOT.jar
+bradesco-crons 172.20.130.110 172.20.130.113 digital-enrollment-service-bradesco-crons-0.0.1-SNAPSHOT.jar
+bradesco-v2 172.20.130.110 172.20.130.115 digital-enrollment-service-bradesco-v2-0.0.1-SNAPSHOT.jar
+configuration-v2 172.20.130.110 172.20.130.114 digital-enrollment-service-configuration-v2-0.0.1-SNAPSHOT.jar
+contracts-v2 172.20.130.110 172.20.130.120 digital-enrollment-service-contracts-v2-0.0.1-SNAPSHOT.jar
+cryptography-v2 172.20.130.110 172.20.130.112 digital-enrollment-service-cryptography-v2-0.0.1-SNAPSHOT.jar
+documents-v2 172.20.130.110 172.20.130.117 digital-enrollment-service-documents-v2-0.0.1-SNAPSHOT.jar
+external-v2 172.20.130.110 172.20.130.112 digital-enrollment-service-external-v2-0.0.1-SNAPSHOT.jar
+ine-v2 172.20.130.110 172.20.130.115 digital-enrollment-service-ine-v2-0.0.1-SNAPSHOT.jar
+login-v2 172.20.130.110 172.20.130.113 digital-enrollment-service-login-v2-0.0.1-SNAPSHOT.jar
+notification-v2 172.20.130.110 172.20.130.119 digital-enrollment-service-notification-v2-0.0.1-SNAPSHOT.jar
+ocr-v2 172.20.130.110 172.20.130.116 digital-enrollment-service-ocr-v2-0.0.1-SNAPSHOT.jar
+operations-v2 172.20.130.110 172.20.130.115 digital-enrollment-service-operations-v2-0.0.1-SNAPSHOT.jar
+person-v2 172.20.130.110 172.20.130.114 digital-enrollment-service-person-v2-0.0.1-SNAPSHOT.jar
+scoring-v2 172.20.130.110 172.20.130.118 digital-enrollment-service-scoring-v2-0.0.1-SNAPSHOT.jar
+tkn-v2 172.20.130.110 172.20.130.112 digital-enrollment-service-tkn-v2-0.0.1-SNAPSHOT.jar
+users-v2 172.20.130.110 172.20.130.113 digital-enrollment-service-users-v2-0.0.1-SNAPSHOT.jar
+opt 172.20.130.110 172.20.130.113 opt-0.0.1-SNAPSHOT.jar
