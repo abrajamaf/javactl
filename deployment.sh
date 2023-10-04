@@ -23,6 +23,23 @@ function enviroment() {
     exit 0
   fi
 }
+function enviroment2() {
+  echo -e " Elija el ambiente que hará los cambios \n"
+  echo -e " 1 =$VDE CERTIFICACIÓN.$NTRO"
+  echo -e " 2 =$VDE PRODUCCIÓN.$NTRO"
+  echo -e " q =$VDE Salir.$NTRO \n"
+  echo -e "\n"
+  read -r ENV
+  if [ "$ENV" == "1" ]; then
+    export ENV_FILE=nodos-cert.txt
+  elif [ "$ENV" == "2" ]; then
+    export ENV_FILE=nodos-prod.txt
+  else
+    echo -e "$RJO Seleccción no disponible. $NTRO"
+    exit 0
+  fi
+}
+
 function deployment() {
   # copia y despliega el archivo jar en el servidor "principal"
   echo -e "Archivos disponibles: \n"
@@ -55,10 +72,9 @@ function syncronize() {
 
 function status() {
   grep -v '^ *#' <$ENV_FILE | while IFS= read -r line; do
-    SERV=($(cat "$line"))
     # mapfile -d" " -t SERV < <(cat "$line" $ENV_FILE)
-    ssh -t ${SERV[2]} echo -e "$AMA${HOSTNAME^^}$NTRO  $(hostname -I)"
-    ssh -t ${SERV[2]} "sudo /BID/bdco-servicios/tools/status-services.sh"
+    ssh -n -T "$line" 'echo -e $AMA${HOSTNAME^^}$NTRO  $(hostname -I)'
+    ssh -n -T "$line" 'sudo /BID/bdco-servicios/tools/status-services.sh'
   done
 }
 
@@ -88,7 +104,7 @@ while [[ $OPT != q ]]; do
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   3)
-    enviroment
+    enviroment2
     status
     echo " ----------------------------------------------------------------------------- "
     read -p "Pulse cualquier tecla para continuar ..." any
