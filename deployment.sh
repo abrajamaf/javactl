@@ -101,9 +101,13 @@ function service() {
   elif [ "$ENV" == "3" ]; then
     export act=restart
     action
+  elif [ "$ENV" == "3" ]; then
+    export act=status
+    action
+    # echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
+    # ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
   else
-    echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
-    ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
+   echo -e " $RJO ¡La selección no existe!$NTRO"
   fi
 }
 
