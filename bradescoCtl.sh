@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #=============================================================================
 # Titulo      : bradescoCtl.sh
-# Descripcion : Realiza tareas de deespliegue actualización y control de 
+# Descripcion : Realiza tareas de deespliegue actualización y control de
 #             : los servicios java de BID-Bradesco
 # Autor       : Abraham Alvarado Fuente
 # Date        : 2023-09-05
@@ -89,7 +89,7 @@ function rollback() {
   echo -e "\n"
   read -r rollScript
   echo -e "$RJO ¿Está seguro de hacerlo?$NTRO"
-  echo -e " Digite$AMA s$NTRO para ejecurar el rollback o $AMA n$NTRO para abortar."
+  echo -e " Digite$AMA s$NTRO para ejecurar el rollback o cualquiera para abortar"
   read -r resp
   if [ "$resp" == s ]; then
     ssh -t ${SERV[1]} "sudo $rollScript"
@@ -146,9 +146,9 @@ function action() {
   read -p " Elije es servicio: " servicio
   SERV=($(grep "$servicio" $ENV_FILE))
   echo -e "$AMA Deteniendo los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
-  ssh  ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl $act {}"
+  ssh ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl $act {}"
   echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
-  ssh  ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
+  ssh ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
   echo " ----------------------------------------------------------------------------- "
 }
 
@@ -178,7 +178,7 @@ function service() {
     read -p " Elije es servicio: " servicio
     SERV=($(grep "$servicio" $ENV_FILE))
     echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
-    ssh  ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
+    ssh ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
   else
     echo -e " $RJO ¡Seleccción no disponible.!$NTRO"
   fi
@@ -199,6 +199,7 @@ function menu() {
   echo -e "$AMA 3$NTRO =$VDE Status$NTRO de los servicios en los nodos correspondientes del cluster."
   echo -e "$AMA 4$NTRO =$VDE Inicia, Detiene, Reinicia y Muestra $NTRO los servicios en los nodos correspondientes del cluster."
   echo -e "$AMA 5$NTRO =$VDE Rollback$NTRO de un servicio."
+  echo -e "$AMA 6$NTRO =$VDE Load Balancer$NTRO de un servicio."
   echo -e "$AMA q$NTRO =$VDE Salir$NTRO."
   echo -e "\n"
 }
@@ -235,6 +236,11 @@ while [[ $OPT != q ]]; do
     enviroment
     rollback
     echo " ----------------------------------------------------------------------------- "
+    read -p "Pulse cualquier tecla para continuar ..." any
+    ;;
+  6)
+    enviroment2
+    loadbalabcer
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   q)
