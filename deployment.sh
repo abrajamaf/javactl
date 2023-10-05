@@ -11,7 +11,7 @@ function enviroment() {
   echo -e " Elija el ambiente que hará los cambios \n"
   echo -e " 1 =$VDE CERTIFICACIÓN.$NTRO"
   echo -e " 2 =$VDE PRODUCCIÓN.$NTRO"
-  echo -e " q =$VDE Salir.$NTRO \n"
+  echo -e " q =$VDE Salir.$NTRO"
   echo -e "\n"
   read -r ENV
   if [ "$ENV" == "1" ]; then
@@ -19,7 +19,7 @@ function enviroment() {
   elif [ "$ENV" == "2" ]; then
     export ENV_FILE=prodServ.txt
   else
-    echo -e "$RJO Seleccción no disponible. $NTRO"
+    echo -e "$RJO ¡Seleccción no disponible.! $NTRO"
     exit 0
   fi
 }
@@ -28,7 +28,7 @@ function enviroment2() {
   echo -e " Elija el ambiente que hará los cambios \n"
   echo -e " 1 =$VDE CERTIFICACIÓN.$NTRO"
   echo -e " 2 =$VDE PRODUCCIÓN.$NTRO"
-  echo -e " q =$VDE Salir.$NTRO \n"
+  echo -e " q =$VDE Salir.$NTRO"
   echo -e "\n"
   read -r ENV
   if [ "$ENV" == "1" ]; then
@@ -36,7 +36,7 @@ function enviroment2() {
   elif [ "$ENV" == "2" ]; then
     export ENV_FILE=nodos-prod.txt
   else
-    echo -e "$RJO Seleccción no disponible. $NTRO"
+    echo -e "$RJO ¡Seleccción no disponible.! $NTRO"
     exit 0
   fi
 }
@@ -44,11 +44,14 @@ function enviroment2() {
 function deployment() {
   # copia y despliega el archivo jar en el servidor "principal"
   echo -e "Archivos disponibles: \n"
-  find "$HOME/" -maxdepth 1 -type f -name "*.jar" | awk -F/ '{print $NF}'
+  $AZL
+  find "$HOME/" -maxdepth 1 -type f -name "*.jar" | awk -F/ '{print "  " $NF}'
+  $NTRO
   echo -e "\n"
   echo -e " El script tonará el archivo que se encuentre "
   echo -e " en su$AMA HOME$NTRO = $VDE$HOME$NTRO "
-  echo " Escriba el nombre del archivo: "c
+  echo -e " Escriba el nombre del archivo: "
+  echo -e "\n"
   read -r jarFile
   # mapfile -d" " -t SERV < <(grep "$jarFile" $ENV_FILE)
   SERV=($(grep "$jarFile" $ENV_FILE))
@@ -73,8 +76,11 @@ function syncronize() {
 }
 
 function action() {
+  $AZL
   cat $ENV_FILE | cut -d" " -f1
-  read -p " Elije es servicio: \n" servicio
+  $NTRO
+  echo -e "\n"
+  read -p " Elije es servicio: " servicio
   SERV=($(grep "$servicio" $ENV_FILE))
   echo -e "$AMA Deteniendo los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
   ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl $act {}"
@@ -89,7 +95,7 @@ function service() {
   echo -e " 2 =$VDE Detener.$NTRO"
   echo -e " 3 =$VDE Reiniciar.$NTRO"
   echo -e " 4 =$VDE Status.$NTRO"
-  echo -e " q =$VDE Salir.$NTRO \n"
+  echo -e " q =$VDE Salir.$NTRO"
   echo -e "\n"
   read -r ENV
   if [ "$ENV" == "1" ]; then
@@ -101,13 +107,13 @@ function service() {
   elif [ "$ENV" == "3" ]; then
     export act=restart
     action
-  elif [ "$ENV" == "3" ]; then
+  elif [ "$ENV" == "4" ]; then
     export act=status
     action
     # echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
     # ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
   else
-   echo -e " $RJO ¡La selección no existe!$NTRO"
+    echo -e " $RJO ¡Seleccción no disponible.!$NTRO"
   fi
 }
 
@@ -124,7 +130,7 @@ function menu() {
   echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal\"."
   echo -e " 2 =$VDE Sincroniza$NTRO los servicios en los nodos correspondientes del cluster."
   echo -e " 3 =$VDE Status$NTRO de los servicios en los nodos correspondientes del cluster."
-  echo -e " 4 =$VDE Inicia, Detiene, Reinicia y Muestra $NTRO el estado de los servicios en los nodos correspondientes del cluster."
+  echo -e " 4 =$VDE Inicia, Detiene, Reinicia y Muestra $NTRO los servicios en los nodos correspondientes del cluster."
   echo -e " q =$VDE Salir$NTRO."
   echo -e "\n"
 }
