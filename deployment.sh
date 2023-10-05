@@ -62,17 +62,18 @@ function deployment() {
 }
 
 function syncronize() {
+  echo -e "$AZL"
   cat $ENV_FILE | cut -d" " -f1
-  echo " Escriba el nombre del servicio que desea sincronizar: "
+  echo "$NTRO Escriba el nombre del servicio que desea sincronizar: "
   read -r jarServ
   # mapfile -d" " -t SERV < <(grep "$jarServ" $ENV_FILE)
-  SERV=($(grep "$jarFile" $ENV_FILE))
+  SERV=($(grep "$jarServ" $ENV_FILE))
   echo -e "$AMA Copiando archivo $AZL${SERV[3]}$NTRO en ${SERV[2]}"
   ssh -t ${SERV[2]} "sudo scp -p -P2290 root@${SERV[1]}:/BID/bdco-servicios/jar/${SERV[3]} /BID/bdco-servicios/jar/"
   echo -e "$AMA Reiniciando servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
   ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl restart {}"
   echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
-  ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl ststus {}"
+  ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
 }
 
 function action() {
