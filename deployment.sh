@@ -108,6 +108,12 @@ function service() {
     export act=restart
     action
   elif [ "$ENV" == "4" ]; then
+    echo -e "$AZL"
+    cat $ENV_FILE | cut -d" " -f1
+    echo -e "$NTRO"
+    # echo -e "\n"
+    read -p " Elije es servicio: " servicio
+    SERV=($(grep "$servicio" $ENV_FILE))
     echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
     ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
   else
