@@ -64,7 +64,8 @@ function deployment() {
 function syncronize() {
   echo -e "$AZL"
   cat $ENV_FILE | cut -d" " -f1
-  echo "$NTRO Escriba el nombre del servicio que desea sincronizar: "
+  echo -e "$NTRO"
+  echo -e " Escriba el nombre del servicio que desea sincronizar: "
   read -r jarServ
   # mapfile -d" " -t SERV < <(grep "$jarServ" $ENV_FILE)
   SERV=($(grep "$jarServ" $ENV_FILE))
