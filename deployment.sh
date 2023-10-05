@@ -23,6 +23,7 @@ function enviroment() {
     exit 0
   fi
 }
+
 function enviroment2() {
   echo -e " Elija el ambiente que hará los cambios \n"
   echo -e " 1 =$VDE CERTIFICACIÓN.$NTRO"
@@ -56,6 +57,7 @@ function deployment() {
   ssh -t "${SERV[1]}" sudo /BID/bdco-servicios/tools/deployment.sh
   # sudo rm -f "$HOME/$jarFile"
 }
+
 function syncronize() {
   cat $ENV_FILE | cut -d" " -f1
   echo " Escriba el nombre del servicio que desea sincronizar: "
@@ -68,6 +70,41 @@ function syncronize() {
   ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl restart {}"
   echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
   ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl ststus {}"
+}
+
+function action() {
+  cat $ENV_FILE | cut -d" " -f1
+  read -p " Elije es servicio: \n" servicio
+  SERV=($(grep "$servicio" $ENV_FILE))
+  echo -e "$AMA Deteniendo los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
+  ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl $act {}"
+  echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
+  ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
+  echo " ----------------------------------------------------------------------------- "
+}
+
+function service() {
+  echo -e " Elija la acción que desea realizar. \n"
+  echo -e " 1 =$VDE Iniciar.$NTRO"
+  echo -e " 2 =$VDE Detener.$NTRO"
+  echo -e " 3 =$VDE Reiniciar.$NTRO"
+  echo -e " 4 =$VDE Status.$NTRO"
+  echo -e " q =$VDE Salir.$NTRO \n"
+  echo -e "\n"
+  read -r ENV
+  if [ "$ENV" == "1" ]; then
+    export act=start
+    action
+  elif [ "$ENV" == "2" ]; then
+    export act=stop
+    action
+  elif [ "$ENV" == "3" ]; then
+    export act=restart
+    action
+  else
+    echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
+    ssh -t ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
+  fi
 }
 
 function status() {
@@ -83,6 +120,7 @@ function menu() {
   echo -e " 1 =$VDE Despliega$NTRO archivo jar en el servidor \"principal\"."
   echo -e " 2 =$VDE Sincroniza$NTRO los servicios en los nodos correspondientes del cluster."
   echo -e " 3 =$VDE Status$NTRO de los servicios en los nodos correspondientes del cluster."
+  echo -e " 4 =$VDE Inicia, Detiene, Reinicia y Muestra $NTRO el estado de los servicios en los nodos correspondientes del cluster."
   echo -e " q =$VDE Salir$NTRO."
   echo -e "\n"
 }
@@ -106,6 +144,12 @@ while [[ $OPT != q ]]; do
   3)
     enviroment2
     status
+    echo " ----------------------------------------------------------------------------- "
+    read -p "Pulse cualquier tecla para continuar ..." any
+    ;;
+  4)
+    enviroment
+    service
     echo " ----------------------------------------------------------------------------- "
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
