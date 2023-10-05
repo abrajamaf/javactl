@@ -44,10 +44,10 @@ function enviroment2() {
 function deployment() {
   # copia y despliega el archivo jar en el servidor "principal"
   echo -e "Archivos disponibles: \n"
-  $AZL
+  echo "$AZL"
   find "$HOME/" -maxdepth 1 -type f -name "*.jar" | awk -F/ '{print "  " $NF}'
-  $NTRO
-  echo -e "\n"
+  echo "$NTRO"
+  # echo -e "\n"
   echo -e " El script tonará el archivo que se encuentre "
   echo -e " en su$AMA HOME$NTRO = $VDE$HOME$NTRO "
   echo -e " Escriba el nombre del archivo: "
@@ -76,10 +76,10 @@ function syncronize() {
 }
 
 function action() {
-  $AZL
+  echo -e "$AZL"
   cat $ENV_FILE | cut -d" " -f1
-  $NTRO
-  echo -e "\n"
+  echo -e "$NTRO"
+  # echo -e "\n"
   read -p " Elije es servicio: " servicio
   SERV=($(grep "$servicio" $ENV_FILE))
   echo -e "$AMA Deteniendo los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
