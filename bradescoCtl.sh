@@ -112,10 +112,8 @@ function loadbalabcer() {
     read -r CLUSTER
     if [ "${CLUSTER}" == 1 ]; then
       ssh $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/oneNode.sh' ## Cambia Cluster a un nodo
-      exit 0
     elif [ "${CLUSTER}" == 2 ]; then
       ssh $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/clusterNodes.sh' ## Cambia a multinodo
-      exit 0
     else
       echo -e "$RJO ¡Seleccción no disponible.! $NTRO"
     fi
