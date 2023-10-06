@@ -99,12 +99,14 @@ function rollback() {
 }
 
 function loadbalabcer() {
+  MODE=$(ssh -T $NGINX sudo cat /etc/nginx/conf.d/upstream/cluster.mode)
   echo -e " Ésta opción redirige el tráfico a un$AMA solo Servidor$NTRO,"
   echo -e " o bien, hacia los diversos servidores del cluster"
   echo -e " Solo está permitido para$AZL Infraestructura.$NTRO"
   echo -e " Si esta seguro digite:$AMA s$NTRO"
   read -r ABC
   if [[ "${ABC}" == s ]]; then
+    echo -e "$AMA Estado actual de balanceador: $BLNK $MODE $NTRO"
     echo -e "$AMA 1$NTRO = Dirige el tráfico a un solo servidor"
     echo -e "$AMA 2$NTRO = Dirige el tráfico a multinodo."
     echo -e "     Asegurese que los servicios esta sincronizados y corriendo."
@@ -112,8 +114,10 @@ function loadbalabcer() {
     read -r CLUSTER
     if [ "${CLUSTER}" == 1 ]; then
       ssh $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/oneNode.sh' ## Cambia Cluster a un nodo
+      echo -e "$AMA Un solo nodo $NTRO"
     elif [ "${CLUSTER}" == 2 ]; then
       ssh $NGINX 'sudo /etc/nginx/conf.d/upstream/nodos/clusterNodes.sh' ## Cambia a multinodo
+      echo -e "$VDE Multinodo $NTRO"
     else
       echo -e "$RJO ¡Seleccción no disponible.! $NTRO"
     fi
@@ -239,6 +243,7 @@ while [[ $OPT != q ]]; do
   6)
     enviroment2
     loadbalabcer
+    echo " ----------------------------------------------------------------------------- "
     read -p "Pulse cualquier tecla para continuar ..." any
     ;;
   q)
