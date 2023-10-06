@@ -106,10 +106,10 @@ function loadbalabcer() {
   echo -e " Si esta seguro digite:$AMA s$NTRO"
   read -r ABC
   if [[ "${ABC}" == s ]]; then
-    echo -e "$AMA Estado actual de balanceador: $BLNK $MODE $NTRO"
+    echo -e "$AMA Estado actual del balanceador: $BLNK $MODE $NTRO"
     echo -e "$AMA 1$NTRO = Dirige el tráfico a un solo servidor"
     echo -e "$AMA 2$NTRO = Dirige el tráfico a multinodo."
-    echo -e "     Asegurese que los servicios esta sincronizados y corriendo."
+    echo -e "     Asegurese que los servicios estan sincronizados y corriendo."
     echo -e "     en cada servidor"
     read -r CLUSTER
     if [ "${CLUSTER}" == 1 ]; then
