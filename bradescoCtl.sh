@@ -9,6 +9,7 @@
 # Uso         : sh status-services.sh
 #=============================================================================
 # set -eox pipefail ## Verbose del scritp
+cd /opt/bid-scripts/bdco-clt/ || exit
 # Colores
 RJO='\e[1;31m'
 VDE='\e[1;32m'
@@ -154,7 +155,7 @@ function action() {
   # echo -e "\n"
   read -p " Elije es servicio: " servicio
   SERV=($(grep "$servicio" $ENV_FILE))
-  echo -e "$AMA Deteniendo los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
+  echo -e "$AMA $accion los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
   ssh ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl $act {}"
   echo -e "$AMA Estado de los servicios $AZL${SERV[0]}$NTRO en ${SERV[2]} ..."
   ssh ${SERV[2]} "sudo ls /BID/bdco-servicios/systemd/ | cut -d '.' -f1 | grep ${SERV[0]} | xargs -i sudo systemctl status {}"
@@ -173,12 +174,15 @@ function service() {
   read -r ENV
   if [ "$ENV" == "1" ]; then
     export act=start
+    export accion=Iniciando
     action
   elif [ "$ENV" == "2" ]; then
     export act=stop
+    export accion=Deteniendo
     action
   elif [ "$ENV" == "3" ]; then
     export act=restart
+    export accion=Reiniciando
     action
   elif [ "$ENV" == "4" ]; then
     echo -e "$AZL"
