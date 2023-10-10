@@ -26,12 +26,13 @@ function enviroment() {
   if [ "$ENV" == 1 ]; then
     export ENV_FILE=certServ.txt
     export NGINX="172.20.138.7"
+    export TAG="CERTIFICACIÓN"
   elif [ "$ENV" == 2 ]; then
     export ENV_FILE=prodServ.txt
     export NGINX="172.20.130.100"
+    export TAG="PRODUCCIÓN"
   else
     echo -e "$RJO ¡Seleccción no disponible.! $NTRO"
-    exit 0
   fi
 }
 
@@ -49,10 +50,9 @@ function enviroment2() {
   elif [ "$ENV" == 2 ]; then
     export ENV_FILE=nodos-prod.txt
     export NGINX="172.20.130.100"
-    export TAG=PRODUCCIÓN
+    export TAG="PRODUCCIÓN"
   else
     echo -e "$RJO ¡Seleccción no disponible.! $NTRO"
-    exit 0
   fi
 }
 
@@ -62,7 +62,7 @@ function deployment() {
   echo -e "$AZL"
   find "$HOME/" -maxdepth 1 -type f -name "*.jar" | awk -F/ '{print "  " $NF}'
   echo -e "$NTRO"
-  echo -e " ####### Estamos en $BLNK $VDE $TAG $NTRO  ####### "
+  echo -e " ####### Estamos en $VDE $TAG $NTRO  ####### "
   echo -e "\n"
   echo -e " El script tomará el archivo que se encuentre "
   echo -e " en su$AMA HOME$NTRO = $VDE$HOME$NTRO "
@@ -78,8 +78,8 @@ function deployment() {
 }
 
 function rollback() {
+  echo -e " ####### Estamos en $VDE $TAG $NTRO  ####### \n"
   SERV=($(grep "opt" $ENV_FILE))
-  echo -e " ####### Estamos en $BLNK $VDE $TAG $NTRO  ####### "
   echo -e " Esta actividad solo actua sobre el servidor $BLNK ${SERV[1]} $NTRO \"proncipal.\" "
   echo -e " Una vez que haya realizado el rollback, debe hacer la sincronización"
   echo -e " del servicio hacia los nodos correspondientes del cluster."
@@ -147,7 +147,7 @@ function syncronize() {
 }
 
 function action() {
-  echo -e " ####### Estamos en $BLNK $VDE $TAG $NTRO  ####### "
+  echo -e " ####### Estamos en $VDE $TAG $NTRO  ####### \n"
   echo -e "$AZL"
   cat $ENV_FILE | cut -d" " -f1
   echo -e "$NTRO"
@@ -162,7 +162,7 @@ function action() {
 }
 
 function service() {
-  echo -e " ####### Estamos en $BLNK $VDE $TAG $NTRO  ####### \n"
+  echo -e " ####### Estamos en $VDE $TAG $NTRO  ####### \n"
   echo -e " Elija la acción que desea realizar. \n"
   echo -e "$AMA 1 $NTRO=$VDE Iniciar.$NTRO"
   echo -e "$AMA 2 $NTRO=$VDE Detener.$NTRO"
