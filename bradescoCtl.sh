@@ -73,7 +73,7 @@ function deployment() {
   # mapfile -d" " -t SERV < <(grep "$jarFile" $ENV_FILE)
   SERV=($(grep "$jarFile" $ENV_FILE))
 
-  scp -p -P 2290 "$HOME/$jarFile" "${SERV[1]}":/BID/bdco-servicios/deployment/deppot/
+  scp -p -P 2290 "$HOME/upload/$jarFile" "${SERV[1]}":/BID/bdco-servicios/deployment/deppot/
   ssh -t "${SERV[1]}" sudo /BID/bdco-servicios/tools/deployment.sh
   # sudo rm -f "$HOME/$jarFile"
 }
