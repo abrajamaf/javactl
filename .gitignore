@@ -2,8 +2,6 @@ certServices_old.sh
 insert-crontab2.sh
 insert-crontab.sh
 insert-key.sh
-nodos-cert.txt
-nodos-prod.txt
 test.sh
 tests.sh
 test.txt
