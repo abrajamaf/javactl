@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+sudo su 
 mv /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.example
 mv /etc/zabbix_agentd.conf /etc/zabbix_agentd.example
 mkdir -p /etc/zabbix/zabbix_agentd.d/
@@ -10,7 +11,7 @@ PidFile=/run/zabbix/zabbix_agentd.pid
 LogFile=/var/log/zabbix/zabbix_agentd.log
 LogFileSize=0
 AllowKey=system.run[*]
- LogRemoteCommands=1
+LogRemoteCommands=1
 Server=172.20.130.105
 ServerActive=172.20.130.105,172.0.0.1
 Hostname=${HOSTNAME^^}

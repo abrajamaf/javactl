@@ -18,3 +18,4 @@ scoring-v2 172.20.130.110 172.20.130.118 digital-enrollment-service-scoring-v2-0
 tkn-v2 172.20.130.110 172.20.130.112 digital-enrollment-service-tkn-v2-0.0.1-SNAPSHOT.jar
 users-v2 172.20.130.110 172.20.130.113 digital-enrollment-service-users-v2-0.0.1-SNAPSHOT.jar
 opt 172.20.130.110 172.20.130.113 opt-0.0.1-SNAPSHOT.jar
+finbe-v2 172.20.130.110 172.20.130.118 digital-enrollment-service-finbe-v2-0.0.1-SNAPSHOT.jar
