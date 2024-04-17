@@ -61,12 +61,12 @@ function deployment() {
   # copia y despliega el archivo jar en el servidor "principal"
   echo -e "Archivos disponibles: "
   echo -e "$AZL"
-  find "$HOME/" -maxdepth 1 -type f -name "*.jar" | awk -F/ '{print "  " $NF}'
+  find "$HOME/upload" -maxdepth 1 -type f -name "*.jar" | awk -F/ '{print "  " $NF}'
   echo -e "$NTRO"
   echo -e " ####### Estamos en $VDE $TAG $NTRO  ####### "
   echo -e "\n"
   echo -e " El script tomará el archivo que se encuentre "
-  echo -e " en su$AMA HOME$NTRO = $VDE$HOME$NTRO "
+  echo -e " en su$AMA HOME$NTRO = $VDE$HOME/upload$NTRO "
   echo -e " Escriba el nombre del archivo: "
   echo -e "\n"
   read -r jarFile
