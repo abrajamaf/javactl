@@ -19,5 +19,5 @@ tkn-v2 172.20.138.10 172.20.138.11 digital-enrollment-service-tkn-v2-0.0.1-SNAPS
 users-v2 172.20.138.10 172.20.138.12 digital-enrollment-service-users-v2-0.0.1-SNAPSHOT.jar
 opt 172.20.138.10 172.20.138.12 opt-0.0.1-SNAPSHOT.jar
 finbe-v2 172.20.138.10 172.20.138.17 digital-enrollment-service-finbe-v2-0.0.1-SNAPSHOT.jar
-job-bradescard-or 172.20.138.10 172.20.130.19 digital-enrollment-job-bradescard-or-0.0.1-SNAPSHOT.jar
-bradesco-socios 172.20.138.10 172.20.130.19 digital-enrollment-service-bradesco-socios-0.0.1-SNAPSHOT.jar
+job-bradescard-or 172.20.138.10 172.20.130.13 digital-enrollment-job-bradescard-or-0.0.1-SNAPSHOT.jar
+bradesco-socios 172.20.138.10 172.20.138.12 digital-enrollment-service-bradesco-socios-0.0.1-SNAPSHOT.jar
